@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:fidget_tool/data/vibration-options.dart';
-import 'package:fidget_tool/services/settings-preferences.dart';
+import 'package:fidget_tool/services/data-preferences.dart';
 
 class SettingsModel {
   VibrationOptions _vibration;
@@ -12,17 +12,17 @@ class SettingsModel {
 
   set vibration(VibrationOptions value) {
     this._vibration = value;
-    SettingsPreferences.setVibrationOption(value);
+    StoredData.setVibrationOption(value);
   }
 
   bool get hasBulb => this._hasBulb;
 
   set hasBulb(value) {
     this._hasBulb = value;
-    SettingsPreferences.setBulbOption(value);
+    StoredData.setBulbOption(value);
   }
 
   SettingsModel()
-      : this._hasBulb = SettingsPreferences.getBulbOption(),
-        this._vibration = SettingsPreferences.getVibrationOption();
+      : this._hasBulb = StoredData.getBulbOption(),
+        this._vibration = StoredData.getVibrationOption();
 }

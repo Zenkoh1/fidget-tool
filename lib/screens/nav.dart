@@ -10,7 +10,7 @@ import 'package:fidget_tool/models/settings-model.dart';
 
 import 'package:fidget_tool/data/vibration-options.dart';
 
-import 'package:fidget_tool/services/settings-preferences.dart';
+import 'package:fidget_tool/services/data-preferences.dart';
 //import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Nav extends StatefulWidget {
@@ -26,6 +26,7 @@ class _NavState extends State<Nav> {
     return [
       FidgetScroller(),
       FidgetDrag(),
+      TrackingScreen(),
       Settings(),
     ];
   }
@@ -46,6 +47,7 @@ class _NavState extends State<Nav> {
           children: _children(),
         ),
         bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
           unselectedItemColor: Colors.white,
           backgroundColor: Colors.red.withOpacity(0),
           selectedItemColor: Colors.red,
@@ -66,10 +68,16 @@ class _NavState extends State<Nav> {
             ),
             BottomNavigationBarItem(
               icon: Icon(
+                Icons.track_changes,
+              ),
+              label: 'Tracking Thing',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
                 Icons.settings,
               ),
               label: 'Settings',
-            )
+            ),
           ],
         ),
       ),

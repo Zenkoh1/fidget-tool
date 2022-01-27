@@ -10,7 +10,7 @@ extension ParseToString on VibrationOptions {
   }
 }
 
-extension ParsetoEnum on String {
+extension VibrationtoEnum on String {
   VibrationOptions toEnum() {
     return VibrationOptions.values.firstWhere(
       (element) => describeEnum(element) == this,
