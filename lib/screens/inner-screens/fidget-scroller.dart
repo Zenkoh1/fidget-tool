@@ -12,8 +12,6 @@ import 'package:fidget_tool/data/vibration-options.dart';
 class FidgetScroller extends StatefulWidget {
   const FidgetScroller({Key key}) : super(key: key);
 
-  static const route = '/fidgetscroller';
-
   @override
   _FidgetScrollerState createState() => _FidgetScrollerState();
 }
@@ -78,28 +76,10 @@ class _FidgetScrollerState extends State<FidgetScroller> {
           BlackCover(
             isCoverVisible: _isCoverVisible,
           ),
-          // Positioned(
-          //   bottom: size.height * 0.075,
-          //   right: size.width * 0,
-          //   child: IconButton(
-          //     icon: Icon(
-          //       _isCoverVisible
-          //           ? FontAwesomeIcons.lightbulb
-          //           : FontAwesomeIcons.solidLightbulb,
-          //       color: Colors.white,
-          //       size: size.width * 0.1,
-          //     ),
-          //     onPressed: () {
-          //       setState(() {
-          //         _isCoverVisible = !_isCoverVisible;
-          //       });
-          //     },
-          //   ),
-          // ),
           Visibility(
             visible: settingsModel.hasBulb,
             child: DraggableLightBulb(
-              initialOffset: Offset.zero,
+              initialOffset: Offset(10, 10),
               onPressed: () {
                 setState(() {
                   _isCoverVisible = !_isCoverVisible;

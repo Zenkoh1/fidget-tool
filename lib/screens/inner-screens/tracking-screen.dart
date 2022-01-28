@@ -1,14 +1,14 @@
-import 'dart:math';
-
-import 'package:fidget_tool/data/emotions.dart';
-import 'package:fidget_tool/models/weekly-data-model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
-import 'package:fidget_tool/services/data-preferences.dart';
+import 'package:fidget_tool/services/stored-data.dart';
 
 import 'package:fidget_tool/widgets/widgets.dart';
+
+import 'package:fidget_tool/data/emotions.dart';
+
+import 'package:fidget_tool/models/weekly-data-model.dart';
 
 class TrackingScreen extends StatefulWidget {
   TrackingScreen({Key key}) : super(key: key);
@@ -30,7 +30,11 @@ class _TrackingScreenState extends State<TrackingScreen>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     startTimer();
-    _selectedData = WeeklyData(dateTime: DateTime.now());
+    var now = DateTime.now();
+    _selectedData = WeeklyData(
+      dateTime: now,
+      emotions: StoredData.getEmotion(now),
+    );
   }
 
   @override
@@ -65,17 +69,16 @@ class _TrackingScreenState extends State<TrackingScreen>
       Duration pastUsageTime =
           DateTime(dateNow.year, dateNow.month, dateNow.day)
               .difference(startTime);
-      await StoredData.setTimeTrackerOption(
-          StoredData.getTimeTrackerOption(startTime) +
-              pastUsageTime.inMilliseconds,
+      await StoredData.setTimeTracker(
+          StoredData.getTimeTracker(startTime) + pastUsageTime.inMilliseconds,
           startTime);
+      print('test');
     } else {
       currentUsageTime = dateNow.difference(startTime);
     }
-
-    await StoredData.setTimeTrackerOption(
-        StoredData.getTimeTrackerOption(dateNow) +
-            currentUsageTime.inMilliseconds,
+    print(currentUsageTime);
+    await StoredData.setTimeTracker(
+        StoredData.getTimeTracker(dateNow) + currentUsageTime.inMilliseconds,
         dateNow);
     setState(() {});
   }
@@ -90,16 +93,16 @@ class _TrackingScreenState extends State<TrackingScreen>
     // for now, i don't use seconds
     var seconds = x.truncate() % 60;
     x /= 60;
-    var minutes = x.truncate() % 60;
-    x /= 60;
-    var hoursDouble = x % 24;
+    var minutesDouble = x % 60;
+    //x /= 60;
+    //var hoursDouble = x % 24;
 
     //int hours = hoursDouble.;
 
-    return hoursDouble;
+    return minutesDouble;
   }
 
-  List<WeeklyData> dataBuilder(int week) {
+  Map<String, dynamic> dataBuilder(int week) {
     var dateNow = DateTime.now();
     var weekDay = dateNow.weekday;
     var firstDayOfWeek = dateNow
@@ -108,21 +111,25 @@ class _TrackingScreenState extends State<TrackingScreen>
 
     List<WeeklyData> timeDataList = [];
 
+    double max = 0;
+
     for (var i = 0; i < 7; i++) {
       var iterDay = firstDayOfWeek.add(Duration(days: i));
 
-      var timeInHours = getReadableTimeFromMillisecond(
-          StoredData.getTimeTrackerOption(iterDay) ?? 0);
+      var timeInMins = getReadableTimeFromMillisecond(
+          StoredData.getTimeTracker(iterDay) ?? 0);
 
-      var emotion = StoredData.getEmotion(iterDay) ?? Emotions.Neutral;
+      var emotion = StoredData.getEmotion(iterDay);
       timeDataList.add(WeeklyData(
-        timeInHours: timeInHours,
+        timeInMins: timeInMins,
         dateTime: iterDay,
         emotions: emotion,
       ));
+
+      max = timeInMins > max ? timeInMins : max;
     }
 
-    return timeDataList;
+    return {'max': max, 'data': timeDataList};
   }
 
   void changeSelectedDate(WeeklyData weeklyData) {
@@ -146,10 +153,12 @@ class _TrackingScreenState extends State<TrackingScreen>
               reverse: true,
             ),
             items: [0, 1, 2, 3].map((i) {
+              final dataDict = dataBuilder(i);
               return TimeBarChart(
-                weeklyData: dataBuilder(i),
+                weeklyData: dataDict['data'],
                 refreshTime: refreshTime,
                 changeSelectedDate: changeSelectedDate,
+                max: dataDict['max'],
               );
             }).toList(),
           ),
@@ -158,31 +167,63 @@ class _TrackingScreenState extends State<TrackingScreen>
             style: TextStyle(
               color: Colors.blueGrey,
               fontSize: size.height * 0.03,
+              fontWeight: FontWeight.bold,
             ),
           ),
-          DropdownButton<Emotions>(
-            value: _selectedData.emotions,
-            style: const TextStyle(color: Colors.redAccent),
-            underline: Container(
-              height: 2,
-              color: Colors.redAccent,
-            ),
-            onChanged: (Emotions newValue) {
-              setState(() {
-                _selectedData.emotions = newValue;
-                StoredData.setEmotion(_selectedData.dateTime, newValue);
-              });
-            },
-            items: Emotions.values
-                .map<DropdownMenuItem<Emotions>>((Emotions value) {
-              return DropdownMenuItem<Emotions>(
-                value: value,
-                child: Text(
-                  value.toShortString(),
-                  style: TextStyle(fontSize: size.height * 0.025),
+          SizedBox(
+            height: size.height * 0.03,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Emotion:',
+                style: TextStyle(
+                  fontSize: size.height * 0.025,
+                  color: Colors.blueGrey,
+                  fontWeight: FontWeight.bold,
                 ),
-              );
-            }).toList(),
+              ),
+              SizedBox(
+                width: size.width * 0.3,
+                child: DropdownButtonFormField<Emotions>(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.tealAccent[400],
+                      ),
+                      borderRadius: BorderRadius.circular(size.width * 0.05),
+                    ),
+                    //filled: true,
+                    fillColor: Colors.tealAccent[400].withOpacity(0.8),
+                  ),
+                  value: _selectedData.emotions,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: size.height * 0.025,
+                  ),
+                  dropdownColor: Colors.tealAccent[400],
+                  onChanged: (Emotions newValue) {
+                    setState(() {
+                      _selectedData.emotions = newValue;
+                      StoredData.setEmotion(_selectedData.dateTime, newValue);
+                    });
+                  },
+                  items: Emotions.values
+                      .map<DropdownMenuItem<Emotions>>((Emotions value) {
+                    return DropdownMenuItem<Emotions>(
+                      value: value,
+                      child: Text(
+                        value.toShortString(),
+                        style: TextStyle(
+                          color: value.getActiveColour(),
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ],
           )
         ],
       ),

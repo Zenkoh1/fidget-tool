@@ -1,5 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:intl/intl.dart';
+
 import 'package:fidget_tool/data/vibration-options.dart';
 import 'package:fidget_tool/data/emotions.dart';
 
@@ -29,23 +31,24 @@ class StoredData {
 
   static bool getBulbOption() => _preferences.getBool(_bulbKey) ?? true;
 
-  static Future setTimeTrackerOption(int time, DateTime dateTime) async {
-    var key = dateTime.day + dateTime.month + dateTime.year;
-    await _preferences.setInt(key.toString(), time);
+  static final DateFormat dateFormat = DateFormat("ddMMyyyy");
+
+  static Future setTimeTracker(int time, DateTime dateTime) async {
+    await _preferences.setInt(dateFormat.format(dateTime), time);
   }
 
-  static int getTimeTrackerOption(DateTime dateTime) {
-    var key = dateTime.day + dateTime.month + dateTime.year;
-    return _preferences.getInt(key.toString()) ?? 0;
+  static int getTimeTracker(DateTime dateTime) {
+    return _preferences.getInt(dateFormat.format(dateTime)) ?? 0;
   }
 
   static Future setEmotion(DateTime dateTime, Emotions emotions) async {
-    var key = dateTime.day + dateTime.month + dateTime.year;
-    await _preferences.setString('{$key emotion}', emotions.toShortString());
+    await _preferences.setString(
+        '${dateFormat.format(dateTime)} emotion', emotions.toShortString());
   }
 
   static Emotions getEmotion(DateTime dateTime) {
-    var key = dateTime.day + dateTime.month + dateTime.year;
-    return EmotionstoEnum(_preferences.getString('{$key emotion}')).toEnum();
+    return EmotionstoEnum(
+            _preferences.getString('${dateFormat.format(dateTime)} emotion'))
+        .toEnum();
   }
 }

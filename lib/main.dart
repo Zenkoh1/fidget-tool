@@ -1,4 +1,4 @@
-import 'package:fidget_tool/services/data-preferences.dart';
+import 'package:fidget_tool/services/stored-data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

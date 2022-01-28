@@ -9,16 +9,19 @@ import 'package:fidget_tool/data/emotions.dart';
 
 class TimeBarChart extends StatefulWidget {
   final List<WeeklyData> weeklyData;
+  final num max;
 
   final VoidCallback refreshTime;
   final Function(WeeklyData) changeSelectedDate;
 
-  TimeBarChart({
-    Key key,
-    @required this.weeklyData,
-    @required this.refreshTime,
-    @required this.changeSelectedDate,
-  }) : super(key: key);
+  TimeBarChart(
+      {Key key,
+      @required this.weeklyData,
+      @required this.refreshTime,
+      @required this.changeSelectedDate,
+      @required max})
+      : this.max = max > 180 ? max : 180,
+        super(key: key);
 
   @override
   State<TimeBarChart> createState() => _TimeBarChartState();
@@ -60,7 +63,7 @@ class _TimeBarChartState extends State<TimeBarChart> {
                   mainAxisSize: MainAxisSize.max,
                   children: <Widget>[
                     Text(
-                      'Time Usage',
+                      'Time Usage (Min)',
                       style: TextStyle(
                           color: Color(0xff0f4a3c),
                           fontSize: size.height * 0.035,
@@ -128,17 +131,18 @@ class _TimeBarChartState extends State<TimeBarChart> {
       x: x,
       barRods: [
         BarChartRodData(
-          y: isTouched ? y.timeInHours + 1 : y.timeInHours,
+          borderRadius: BorderRadius.all(Radius.circular(2)),
+          y: isTouched ? y.timeInMins + 1 : y.timeInMins,
           colors: isTouched
               ? [y.emotions.getActiveColour()]
               : [y.emotions.getColour()],
-          width: size.width * 0.04,
+          width: size.width * 0.06,
           borderSide: isTouched
               ? BorderSide(color: y.emotions.getActiveColour(), width: 1)
               : const BorderSide(color: Colors.white, width: 0),
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
-            y: 15,
+            y: 180,
             colors: [barBackgroundColor],
           ),
         ),

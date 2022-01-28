@@ -36,8 +36,9 @@ extension GraphColour on Emotions {
       case Emotions.Upset:
         return Colors.blue[300];
         break;
+
       default:
-        return Colors.white;
+        return Colors.grey.withOpacity(0.5);
     }
   }
 
@@ -59,7 +60,7 @@ extension GraphColour on Emotions {
         return Colors.blue;
         break;
       default:
-        return Colors.white;
+        return Colors.grey.withOpacity(0.5);
     }
   }
 }

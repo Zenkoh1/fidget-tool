@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:fidget_tool/data/vibration-options.dart';
-import 'package:fidget_tool/services/data-preferences.dart';
+import 'package:fidget_tool/services/stored-data.dart';
 
 class SettingsModel {
   VibrationOptions _vibration;

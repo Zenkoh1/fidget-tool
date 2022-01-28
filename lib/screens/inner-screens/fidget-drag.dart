@@ -109,7 +109,7 @@ class _FidgetDragState extends State<FidgetDrag> {
           Visibility(
             visible: settingsModel.hasBulb,
             child: DraggableLightBulb(
-              initialOffset: Offset.zero,
+              initialOffset: Offset(10, 10),
               onPressed: () {
                 setState(() {
                   _isCoverVisible = !_isCoverVisible;
