@@ -82,7 +82,7 @@ class _DraggableLightBulbState extends State<DraggableLightBulb> {
         },
         onPointerMove: (PointerMoveEvent pointerMoveEvent) {
           if (pointerMoveEvent.timeStamp.inMilliseconds >
-              pointerDownTime.inMilliseconds + 50) {
+              pointerDownTime.inMilliseconds + 100) {
             {
               setState(() {
                 _isDragging = true;
