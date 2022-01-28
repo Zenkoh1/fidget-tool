@@ -21,16 +21,16 @@ extension Amplitude on VibrationOptions {
   int getAmplitude() {
     switch (this) {
       case VibrationOptions.Soft:
-        return 10;
-        break;
-      case VibrationOptions.Light:
         return 20;
         break;
+      case VibrationOptions.Light:
+        return 45;
+        break;
       case VibrationOptions.Normal:
-        return 35;
+        return 70;
         break;
       case VibrationOptions.Heavy:
-        return 50;
+        return 100;
         break;
 
       default:
