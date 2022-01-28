@@ -142,7 +142,7 @@ class _TimeBarChartState extends State<TimeBarChart> {
               : const BorderSide(color: Colors.white, width: 0),
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
-            y: 180,
+            y: widget.max.toDouble(),
             colors: [barBackgroundColor],
           ),
         ),
@@ -161,6 +161,7 @@ class _TimeBarChartState extends State<TimeBarChart> {
   BarChartData mainBarData() {
     return BarChartData(
       barTouchData: BarTouchData(
+        allowTouchBarBackDraw: true,
         handleBuiltInTouches: showToolTip,
         touchTooltipData: BarTouchTooltipData(
             tooltipBgColor: Colors.blueGrey,
