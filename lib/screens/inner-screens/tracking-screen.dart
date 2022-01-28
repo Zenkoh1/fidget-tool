@@ -163,7 +163,7 @@ class _TrackingScreenState extends State<TrackingScreen>
             }).toList(),
           ),
           Text(
-            DateFormat('dd MMM yyyy').format(_selectedData.dateTime),
+            DateFormat('dd MMM yyyy (EEE)').format(_selectedData.dateTime),
             style: TextStyle(
               color: Colors.blueGrey,
               fontSize: size.height * 0.03,
