@@ -93,7 +93,7 @@ class _TrackingScreenState extends State<TrackingScreen>
     // for now, i don't use seconds
     var seconds = x.truncate() % 60;
     x /= 60;
-    var minutesDouble = x % 60;
+    var minutesDouble = x;
     //x /= 60;
     //var hoursDouble = x % 24;
 
