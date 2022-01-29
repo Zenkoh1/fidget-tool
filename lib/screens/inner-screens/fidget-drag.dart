@@ -17,45 +17,83 @@ class FidgetDrag extends StatefulWidget {
 }
 
 class _FidgetDragState extends State<FidgetDrag> {
-  ValueNotifier<List<double>> valueListener = ValueNotifier([.5, .5]);
+  ValueNotifier<List<int>> valueListener;
 
   bool _isCoverVisible = false;
+  double circleRadius;
+
+  bool _init = true;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_init) {
+      final size = MediaQuery.of(context).size;
+      circleRadius = size.width * 0.07;
+      valueListener = ValueNotifier([
+        (size.height / 2 - circleRadius).toInt(),
+        (size.width / 2 - circleRadius).toInt()
+      ]);
+      _init = false;
+    }
+  }
 
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final iconSize = size.width * 0.8;
     final settingsModel = context.read<SettingsModel>();
+
+    final topPosPlusIcon = (size.height - iconSize) / 2 - (iconSize * 0.05);
+    final leftPosPlusIcon = (size.width - iconSize) / 2;
     return SafeArea(
       child: Stack(
         children: [
-          Container(
+          Positioned(
+            top: topPosPlusIcon,
+            left: leftPosPlusIcon,
+
             child: Icon(
               FontAwesomeIcons.plus,
-              size: size.width * 0.8,
+              size: iconSize,
               color: Colors.white,
             ),
-            alignment: Alignment.center,
+
             // because the plus icon isnt entirely in the center
-            padding: EdgeInsets.only(
-              bottom: size.width * 0.8 * 0.09,
-            ),
           ),
           Builder(
             builder: (context) {
               final handle = GestureDetector(
                 onVerticalDragUpdate: (details) {
-                  valueListener.value[0] = (valueListener.value[0] +
-                          details.delta.dy / context.size.height)
-                      .clamp(.3275, .6725);
+                  final actualPlusSize = (iconSize * 0.785);
+                  final padding = (iconSize * 0.11);
+
+                  valueListener.value[0] =
+                      (valueListener.value[0] + details.delta.dy.toInt()).clamp(
+                          (topPosPlusIcon + padding).toInt(),
+                          (topPosPlusIcon +
+                                  actualPlusSize +
+                                  padding -
+                                  circleRadius)
+                              .toInt());
+
                   valueListener.value = List.from(valueListener.value);
                 },
                 onHorizontalDragUpdate: (details) {
-                  valueListener.value[1] = (valueListener.value[1] +
-                          details.delta.dx / context.size.width)
-                      .clamp(.185, .815);
+                  final actualPlusSize = (iconSize * 0.785);
+                  final padding = (iconSize * 0.065);
+                  valueListener.value[1] =
+                      (valueListener.value[1] + details.delta.dx.toInt()).clamp(
+                          (leftPosPlusIcon + padding).toInt(),
+                          (leftPosPlusIcon +
+                                  actualPlusSize +
+                                  padding -
+                                  circleRadius)
+                              .toInt());
                   valueListener.value = List.from(valueListener.value);
                 },
                 onHorizontalDragEnd: (_) {
-                  valueListener.value[1] = .5;
+                  valueListener.value[1] =
+                      (size.width / 2 - circleRadius).toInt();
                   valueListener.value = List.from(valueListener.value);
 
                   Vibration.vibrate(
@@ -63,7 +101,8 @@ class _FidgetDragState extends State<FidgetDrag> {
                       amplitude: settingsModel.vibration.getAmplitude());
                 },
                 onVerticalDragEnd: (_) {
-                  valueListener.value[0] = .5;
+                  valueListener.value[0] =
+                      (size.height / 2 - circleRadius).toInt();
                   valueListener.value = List.from(valueListener.value);
 
                   Vibration.vibrate(
@@ -79,9 +118,9 @@ class _FidgetDragState extends State<FidgetDrag> {
               return AnimatedBuilder(
                 animation: valueListener,
                 builder: (context, child) {
-                  return Align(
-                    alignment: Alignment(valueListener.value[1] * 2 - 1,
-                        valueListener.value[0] * 2 - 1),
+                  return Positioned(
+                    top: (valueListener.value[0]).toDouble(),
+                    left: (valueListener.value[1]).toDouble(),
                     child: child,
                   );
                 },
