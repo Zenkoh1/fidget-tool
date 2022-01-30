@@ -142,7 +142,7 @@ class _TimeBarChartState extends State<TimeBarChart> {
               : const BorderSide(color: Colors.white, width: 0),
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
-            y: widget.max.toDouble(),
+            y: widget.max.toDouble() + 1,
             colors: [barBackgroundColor],
           ),
         ),
