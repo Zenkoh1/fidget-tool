@@ -195,14 +195,14 @@ class _TrackingScreenState extends State<TrackingScreen>
                       borderRadius: BorderRadius.circular(size.width * 0.05),
                     ),
                     //filled: true,
-                    fillColor: Colors.tealAccent[400].withOpacity(0.8),
+                    fillColor: Colors.tealAccent.withOpacity(0.8),
                   ),
                   value: _selectedData.emotions,
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: size.height * 0.025,
                   ),
-                  dropdownColor: Colors.tealAccent[400],
+                  dropdownColor: const Color(0xff81e5cd).withOpacity(0.95),
                   onChanged: (Emotions newValue) {
                     setState(() {
                       _selectedData.emotions = newValue;

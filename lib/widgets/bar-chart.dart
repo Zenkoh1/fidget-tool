@@ -240,7 +240,9 @@ class _TimeBarChartState extends State<TimeBarChart> {
         bottomTitles: SideTitles(
           showTitles: true,
           getTextStyles: (context, value) => const TextStyle(
-              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
+              color: Colors.blueGrey,
+              fontWeight: FontWeight.bold,
+              fontSize: 14),
           margin: 16,
           getTitles: (double value) {
             switch (value.toInt()) {

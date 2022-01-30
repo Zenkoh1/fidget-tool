@@ -26,7 +26,7 @@ extension GraphColour on Emotions {
         break;
 
       case Emotions.Happy:
-        return Colors.amber[300];
+        return Colors.amber[400];
         break;
 
       case Emotions.Neutral:
@@ -34,7 +34,7 @@ extension GraphColour on Emotions {
         break;
 
       case Emotions.Upset:
-        return Colors.blue[300];
+        return Colors.blue;
         break;
 
       default:
@@ -49,7 +49,7 @@ extension GraphColour on Emotions {
         break;
 
       case Emotions.Happy:
-        return Colors.amber;
+        return Colors.amber[700];
         break;
 
       case Emotions.Neutral:
@@ -57,7 +57,7 @@ extension GraphColour on Emotions {
         break;
 
       case Emotions.Upset:
-        return Colors.blue;
+        return Colors.blue[800];
         break;
       default:
         return Colors.grey.withOpacity(0.5);
