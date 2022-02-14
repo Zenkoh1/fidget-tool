@@ -4,8 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:vibration/vibration.dart';
 
-import 'inner-screens/fidget-scroller.dart';
-
 import 'package:fidget_tool/models/settings-model.dart';
 
 import 'package:fidget_tool/data/vibration-options.dart';
@@ -24,8 +22,9 @@ class _NavState extends State<Nav> {
 
   List<Widget> _children() {
     return [
-      FidgetScroller(),
-      FidgetDrag(),
+      //FidgetScroller(),
+      //FidgetDrag(),
+      FidgetNav(),
       TrackingScreen(),
       Settings(),
     ];
@@ -58,15 +57,9 @@ class _NavState extends State<Nav> {
           items: [
             BottomNavigationBarItem(
               icon: Icon(
-                FontAwesomeIcons.bars,
+                FontAwesomeIcons.gamepad,
               ),
-              label: 'Scroll thing',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.add,
-              ),
-              label: 'Drag thing',
+              label: 'Widgets',
             ),
             BottomNavigationBarItem(
               icon: Icon(

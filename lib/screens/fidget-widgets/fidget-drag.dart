@@ -55,7 +55,7 @@ class _FidgetDragState extends State<FidgetDrag> {
             child: Icon(
               FontAwesomeIcons.plus,
               size: iconSize,
-              color: Colors.white,
+              color: Colors.grey[350],
             ),
 
             // because the plus icon isnt entirely in the center
@@ -110,7 +110,7 @@ class _FidgetDragState extends State<FidgetDrag> {
                       amplitude: settingsModel.vibration.getAmplitude());
                 },
                 child: CircleAvatar(
-                  radius: size.width * 0.07,
+                  radius: circleRadius,
                   backgroundColor: Colors.red,
                 ),
               );
@@ -128,23 +128,9 @@ class _FidgetDragState extends State<FidgetDrag> {
               );
             },
           ),
-          BlackCover(
+          /*  BlackCover(
             isCoverVisible: _isCoverVisible,
           ),
-          // IconButton(
-          //   icon: Icon(
-          //     _isCoverVisible
-          //         ? FontAwesomeIcons.lightbulb
-          //         : FontAwesomeIcons.solidLightbulb,
-          //     color: Colors.white,
-          //     size: size.width * 0.1,
-          //   ),
-          //   onPressed: () {
-          //     setState(() {
-          //       _isCoverVisible = !_isCoverVisible;
-          //     });
-          //   },
-          // ),
           Visibility(
             visible: settingsModel.hasBulb,
             child: DraggableLightBulb(
@@ -156,7 +142,7 @@ class _FidgetDragState extends State<FidgetDrag> {
               },
               isLitUp: !_isCoverVisible,
             ),
-          ),
+          ), */
         ],
       ),
     );

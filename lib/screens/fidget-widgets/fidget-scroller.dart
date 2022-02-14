@@ -73,7 +73,7 @@ class _FidgetScrollerState extends State<FidgetScroller> {
               ),
             ),
           ),
-          BlackCover(
+          /* BlackCover(
             isCoverVisible: _isCoverVisible,
           ),
           Visibility(
@@ -87,7 +87,7 @@ class _FidgetScrollerState extends State<FidgetScroller> {
               },
               isLitUp: !_isCoverVisible,
             ),
-          ),
+          ), */
         ],
       ),
     );

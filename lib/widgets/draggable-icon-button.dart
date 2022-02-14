@@ -33,6 +33,7 @@ class _DraggableLightBulbState extends State<DraggableLightBulb> {
   void initState() {
     super.initState();
     _offset = widget.initialOffset;
+    _visibilityDetectorController.notifyNow();
   }
 
   void _updatePosition(PointerMoveEvent pointerMoveEvent) {
@@ -56,6 +57,8 @@ class _DraggableLightBulbState extends State<DraggableLightBulb> {
     final iconSize = size.width * 0.12;
 
     _visibilityDetectorController.notifyNow();
+
+    if (visibleBounds == null) return true;
 
     if (visibleBounds.left > 0 && xChange < 0) {
       return false;
