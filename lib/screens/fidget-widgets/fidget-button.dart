@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:vibration/vibration.dart';
 import 'package:provider/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:button3d/button3d.dart';
-import 'package:animated_button/animated_button.dart';
 
 import 'package:fidget_tool/models/settings-model.dart';
 
@@ -61,6 +59,7 @@ class _FidgetButtonState extends State<FidgetButton> {
                               BorderRadius.circular(size.width * 0.16),
                         ),
                         onPressed: () {
+                          print('test');
                           Vibration.vibrate(
                               duration: 50,
                               amplitude:

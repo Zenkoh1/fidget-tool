@@ -32,7 +32,7 @@ dependencies:
   intl: ^0.17.0
   fl_chart: ^0.41.0
   carousel_slider: ^4.0.0
-  button3d: ^0.1.1
+
   animated_button: ^0.2.0
 
 
