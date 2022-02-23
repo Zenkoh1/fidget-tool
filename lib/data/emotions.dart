@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-enum Emotions { Happy, Neutral, Upset, Angry }
+enum Emotions { Happy, Neutral, Upset }
 
 extension ParseToString on Emotions {
   String toShortString() {
@@ -21,10 +21,6 @@ extension EmotionstoEnum on String {
 extension GraphColour on Emotions {
   Color getColour() {
     switch (this) {
-      case Emotions.Angry:
-        return Colors.red[300];
-        break;
-
       case Emotions.Happy:
         return Colors.amber[400];
         break;
@@ -44,10 +40,6 @@ extension GraphColour on Emotions {
 
   Color getActiveColour() {
     switch (this) {
-      case Emotions.Angry:
-        return Colors.red;
-        break;
-
       case Emotions.Happy:
         return Colors.amber[700];
         break;

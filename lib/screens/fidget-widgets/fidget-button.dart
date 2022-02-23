@@ -39,7 +39,15 @@ class _FidgetButtonState extends State<FidgetButton> {
               padding: EdgeInsets.all(size.width * 0.05),
               decoration: BoxDecoration(
                 color: Colors.grey[350],
+                //color: Colors.white,
                 borderRadius: BorderRadius.circular(size.width * 0.1),
+                /*  boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey[50].withOpacity(.5),
+                    spreadRadius: 0,
+                    blurRadius: 20,
+                  ),
+                ], */
               ),
               width: size.width * 0.8,
               height: size.width * 0.8,

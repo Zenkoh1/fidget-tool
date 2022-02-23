@@ -1,9 +1,7 @@
 import 'package:fidget_tool/services/stored-data.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'screens/nav.dart';
-import 'models/settings-model.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();

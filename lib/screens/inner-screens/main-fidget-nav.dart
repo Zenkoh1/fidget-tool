@@ -51,6 +51,7 @@ class _FidgetNavState extends State<FidgetNav> with TickerProviderStateMixin {
       child: Stack(
         children: [
           TabBarView(
+            physics: NeverScrollableScrollPhysics(),
             controller: _tabController,
             children: List.generate(widgetCount, (i) => _children()[i]),
           ),

@@ -40,6 +40,9 @@ class _SettingsState extends State<Settings> {
                 ),
               ),
             ),
+            SizedBox(
+              height: size.height * 0.025,
+            ),
             SettingsOption(
               label: 'Vibration',
               child: DropdownButton<VibrationOptions>(
